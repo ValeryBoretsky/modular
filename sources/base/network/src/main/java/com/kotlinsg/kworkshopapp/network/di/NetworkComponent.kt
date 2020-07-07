@@ -1,6 +1,7 @@
 package com.kotlinsg.kworkshopapp.network.di
 
 import com.kotlinsg.kworkshopapp.di.MainToolsProvider
+import com.kotlinsg.kworkshopapp.di.RepoProvider
 import com.kotlinsg.kworkshopapp.network.NetworkClient
 import com.kotlinsg.kworkshopapp.network.NetworkClientImpl
 import dagger.Binds
@@ -20,4 +21,15 @@ interface NetworkModule {
 @Component(
         dependencies = [MainToolsProvider::class],
         modules = [NetworkModule::class])
-interface NetworkComponent : NetworkProvider
+interface NetworkComponent : NetworkProvider {
+    class Initializer private constructor() {
+        companion object {
+
+            fun init(mainToolsProvider: MainToolsProvider): NetworkProvider {
+                return DaggerNetworkComponent.builder()
+                        .mainToolsProvider(mainToolsProvider)
+                        .build()
+            }
+        }
+    }
+}
