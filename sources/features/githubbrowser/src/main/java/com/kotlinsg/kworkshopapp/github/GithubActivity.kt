@@ -19,6 +19,7 @@ class GithubActivity : AppCompatActivity() {
     @Inject lateinit var notifications: NotificationUseCase
 
     lateinit var refreshButton: Button
+    lateinit var refreshButton2: Button
     lateinit var starsCountText: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,9 +27,11 @@ class GithubActivity : AppCompatActivity() {
         setContentView(R.layout.activity_github)
         inject()
         refreshButton = findViewById(R.id.stars_refresh) as Button
+        refreshButton2 = findViewById(R.id.stars_refresh2) as Button
         starsCountText = findViewById(R.id.stars_count_text) as TextView
 
         refreshButton.setOnClickListener { useCase.loadInfoFromGithub(onLoaded = ::updateUI, onError = ::updateErrorUI) }
+        refreshButton2.setOnClickListener { useCase.loadInfoFromGithub2(onLoaded = ::updateUI, onError = ::updateErrorUI) }
 
         notifications.showMessage()
     }

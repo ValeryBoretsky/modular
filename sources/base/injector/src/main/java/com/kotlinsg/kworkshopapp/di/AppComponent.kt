@@ -4,6 +4,7 @@ import com.kotlinsg.kworkshopapp.RealApp
 import com.kotlinsg.kworkshopapp.network.di.NetworkComponent
 import com.kotlinsg.kworkshopapp.network.di.NetworkProvider
 import com.kotlinsg.kworkshopapp.repo.di.RepoComponent
+import com.kotlinsg.kworkshopapp.repo2.di.RepoComponent2
 import dagger.Component
 import javax.inject.Singleton
 
@@ -13,6 +14,7 @@ import javax.inject.Singleton
             MainToolsProvider::class,
             NetworkProvider::class,
             RepoProvider::class,
+            RepoProvider2::class,
             GithubBrowserProvider::class
         ]
 )
@@ -35,6 +37,9 @@ interface AppComponent : ApplicationProvider {
                 val repoProvider = RepoComponent.Initializer
                         .init(mainToolsProvider, networkProvider)
 
+                val repoProvider2 = RepoComponent2.Initializer
+                        .init(mainToolsProvider, networkProvider)
+
                 val githubBrowserProvider = GithubBrowserExportComponent.Initializer
                         .init(mainToolsProvider)
 
@@ -42,6 +47,7 @@ interface AppComponent : ApplicationProvider {
                         .mainToolsProvider(mainToolsProvider)
                         .networkProvider(networkProvider)
                         .repoProvider(repoProvider)
+                        .repoProvider2(repoProvider2)
                         .githubBrowserProvider(githubBrowserProvider)
                         .build()
             }

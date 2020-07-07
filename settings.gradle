@@ -4,6 +4,8 @@ include ':injector'
 project(':injector').projectDir = new File(rootDir, 'sources/base/injector')
 include ':repo'
 project(':repo').projectDir = new File(rootDir, 'sources/base/repo')
+include ':repo2'
+project(':repo2').projectDir = new File(rootDir, 'sources/base/repo2')
 include ':network'
 project(':network').projectDir = new File(rootDir, 'sources/base/network')
 

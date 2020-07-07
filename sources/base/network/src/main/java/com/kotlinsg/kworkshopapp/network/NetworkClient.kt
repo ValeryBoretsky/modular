@@ -12,6 +12,8 @@ import javax.inject.Inject
 
 interface NetworkClient {
     fun requestProject(path: String, onResult: (GithubProject) -> Unit, onError: (Throwable) -> Unit)
+
+    fun requestProject2(path: String, onResult: (GithubProject) -> Unit, onError: (Throwable) -> Unit)
 }
 
 class NetworkClientImpl @Inject constructor(
@@ -29,6 +31,21 @@ class NetworkClientImpl @Inject constructor(
         { _: Request, _: Response, (result, error): Result<GithubProjectModel, FuelError> ->
 
             result?.let(onResult)
+            error?.let(onError)
+        }
+    }
+
+    override fun requestProject2(path: String, onResult: (GithubProject) -> Unit, onError: (Throwable) -> Unit) {
+
+        val url = "https://api.github.com/repos/$path"
+
+        logger.d("requesting 2: $url")
+
+        url.httpGet().responseObject(
+                deserializer = GithubProjectModel.Deserializer())
+        { _: Request, _: Response, (result, error): Result<GithubProjectModel, FuelError> ->
+
+            result?.let { it.copy(name = it.name + "/ request 2") }?.let(onResult)
             error?.let(onError)
         }
     }
